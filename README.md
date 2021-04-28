@@ -6,7 +6,7 @@ By far the easiest way to share in the glory of this application is to use the [
 
 ## Hello Docker
 
-Clone this repository and start the docker container:
+Clone this repository and start the docker container. The freshly cloned code is mapped to the path `/hello-rld` inside the container.
 
 ~~~bash
 git clone https://github.com/paulhuggett/hello-rld.git
