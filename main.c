@@ -16,8 +16,7 @@ static void write(char const * buf, unsigned long long size) {
 
 int main () {
     char const buf[] = "Hello, World\n";
-    unsigned long long const size = sizeof (buf) - 1;
-    write (buf, size);
+    write (buf, sizeof (buf) - 1);
     return 0;
 }
 
