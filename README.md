@@ -35,7 +35,7 @@ Here’s an example session transcript:
 paul@ubuntu:~$ git clone https://github.com/paulhuggett/hello-rld.git
 Cloning into 'hello-rld'...
 
-paul@ubuntu:~$ docker run --rm --tty --interactive -v ~/hello-rld:/hello-rld paulhuggett/llvm-prepo
+paul@ubuntu:~$ docker run --rm --tty --interactive -v $(pwd)/hello-rld:/hello-rld paulhuggett/llvm-prepo
 To run a command as administrator (user "root"), use "sudo <command>".
 See "man sudo_root" for details.
 
