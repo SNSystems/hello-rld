@@ -15,6 +15,8 @@ git clone https://github.com/paulhuggett/hello-rld.git
 docker run --rm --tty --interactive -v $(pwd)/hello-rld:/hello-rld paulhuggett/llvm-prepo
 ~~~
 
+(If you use a non bash-like shell, replace `$(pwd)` with the path of your current working directory.)
+
 Build the program and run it:
 
 ~~~bash
