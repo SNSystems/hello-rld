@@ -1,4 +1,5 @@
 MUSL = ./musl
+LIBC_DIR = $(MUSL)/lib/libc_repo
 
 CC = clang
 CFLAGS = \
@@ -32,41 +33,42 @@ clang.db: musl.json
 	pstore-import $@ $<
 
 LIBC = \
-	$(MUSL)/lib/libc_repo/__environ.t         \
-	$(MUSL)/lib/libc_repo/__errno_location.t  \
-	$(MUSL)/lib/libc_repo/__fpclassifyl.t     \
-	$(MUSL)/lib/libc_repo/__init_tls.t        \
-	$(MUSL)/lib/libc_repo/__lctrans.t         \
-	$(MUSL)/lib/libc_repo/__libc_start_main.t \
-	$(MUSL)/lib/libc_repo/__lock.t            \
-	$(MUSL)/lib/libc_repo/__lockfile.t        \
-	$(MUSL)/lib/libc_repo/__set_thread_area.t \
-	$(MUSL)/lib/libc_repo/__signbitl.t        \
-	$(MUSL)/lib/libc_repo/__stdio_close.t     \
-	$(MUSL)/lib/libc_repo/__stdio_exit.t      \
-	$(MUSL)/lib/libc_repo/__stdio_seek.t      \
-	$(MUSL)/lib/libc_repo/__stdio_write.t     \
-	$(MUSL)/lib/libc_repo/__stdout_write.t    \
-	$(MUSL)/lib/libc_repo/__towrite.t         \
-	$(MUSL)/lib/libc_repo/default_attr.t      \
-	$(MUSL)/lib/libc_repo/defsysinfo.t        \
-	$(MUSL)/lib/libc_repo/exit.t              \
-	$(MUSL)/lib/libc_repo/frexpl.t            \
-	$(MUSL)/lib/libc_repo/fwrite.t            \
-	$(MUSL)/lib/libc_repo/libc.t              \
-	$(MUSL)/lib/libc_repo/lseek.t             \
-	$(MUSL)/lib/libc_repo/memchr.t            \
-	$(MUSL)/lib/libc_repo/memcpy.t            \
-	$(MUSL)/lib/libc_repo/memset.t            \
-	$(MUSL)/lib/libc_repo/ofl.t               \
-	$(MUSL)/lib/libc_repo/printf.t            \
-	$(MUSL)/lib/libc_repo/stdout.t            \
-	$(MUSL)/lib/libc_repo/strerror.t          \
-	$(MUSL)/lib/libc_repo/strnlen.t           \
-	$(MUSL)/lib/libc_repo/syscall_ret.t       \
-	$(MUSL)/lib/libc_repo/vfprintf.t          \
-	$(MUSL)/lib/libc_repo/wcrtomb.t           \
-	$(MUSL)/lib/libc_repo/wctomb.t
+	$(LIBC_DIR)/_Exit.t             \
+	$(LIBC_DIR)/__environ.t         \
+	$(LIBC_DIR)/__errno_location.t  \
+	$(LIBC_DIR)/__fpclassifyl.t     \
+	$(LIBC_DIR)/__init_tls.t        \
+	$(LIBC_DIR)/__lctrans.t         \
+	$(LIBC_DIR)/__libc_start_main.t \
+	$(LIBC_DIR)/__lock.t            \
+	$(LIBC_DIR)/__lockfile.t        \
+	$(LIBC_DIR)/__set_thread_area.t \
+	$(LIBC_DIR)/__signbitl.t        \
+	$(LIBC_DIR)/__stdio_close.t     \
+	$(LIBC_DIR)/__stdio_exit.t      \
+	$(LIBC_DIR)/__stdio_seek.t      \
+	$(LIBC_DIR)/__stdio_write.t     \
+	$(LIBC_DIR)/__stdout_write.t    \
+	$(LIBC_DIR)/__towrite.t         \
+	$(LIBC_DIR)/default_attr.t      \
+	$(LIBC_DIR)/defsysinfo.t        \
+	$(LIBC_DIR)/exit.t              \
+	$(LIBC_DIR)/frexpl.t            \
+	$(LIBC_DIR)/fwrite.t            \
+	$(LIBC_DIR)/libc.t              \
+	$(LIBC_DIR)/lseek.t             \
+	$(LIBC_DIR)/memchr.t            \
+	$(LIBC_DIR)/memcpy.t            \
+	$(LIBC_DIR)/memset.t            \
+	$(LIBC_DIR)/ofl.t               \
+	$(LIBC_DIR)/printf.t            \
+	$(LIBC_DIR)/stdout.t            \
+	$(LIBC_DIR)/strerror.t          \
+	$(LIBC_DIR)/strnlen.t           \
+	$(LIBC_DIR)/syscall_ret.t       \
+	$(LIBC_DIR)/vfprintf.t          \
+	$(LIBC_DIR)/wcrtomb.t           \
+	$(LIBC_DIR)/wctomb.t
 
 a.out: $(TICKETS)
 	rld -o $@ $(MUSL)/lib/crt1.t $(MUSL)/lib/crt1_asm.t $(MUSL)/lib/crti.t $^ $(LIBC) $(MUSL)/lib/crtn.t
