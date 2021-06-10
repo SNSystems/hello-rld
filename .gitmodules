@@ -1,0 +1,3 @@
+[submodule "musl-prepo"]
+	path = musl-prepo
+	url = https://github.com/MaggieYingYi/musl-prepo
