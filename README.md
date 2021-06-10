@@ -29,7 +29,7 @@ You will be met with the traditional cheery greeting.
 
 ### Example Session
 
-Here’s an example session transcript:
+Here’s an example session:
 
 ~~~
 paul@ubuntu:~$ git clone https://github.com/paulhuggett/hello-rld.git
