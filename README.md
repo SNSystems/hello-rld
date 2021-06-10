@@ -1,6 +1,6 @@
 # Hello, (Wo)rld
 
-Stepping up the complexity considerably, here’s work-in-progress on a version of hello-rld that links in the full might of the musl libc standard library.
+Stepping up the complexity considerably, here’s work-in-progress on a version of hello-rld that incorporates the full might of the musl libc standard library.
 
 ## Build instructions
 
