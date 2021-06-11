@@ -1,5 +1,6 @@
 MUSL = ./musl
-LIBC_DIR = $(MUSL)/lib/libc_repo
+LIBC_T_DIR = $(MUSL)/lib/libc_repo
+LIBC_TO_DIR = $(MUSL)/lib/libc_elf
 
 CC = clang
 CFLAGS = \
@@ -8,19 +9,22 @@ CFLAGS = \
 	-nostdinc \
 	-isystem "$(MUSL)/include"
 
-%.o: %.c
+%.t: %.c
 	REPOFILE=clang.db $(CC) -o $@ -c $(CFLAGS) $<
+%.t.o: %.t
+	REPOFILE=clang.db repo2obj -o $@ $<
 
-TICKETS = main.o
+TICKETS = main.t
+OBJECTS = $(TICKETS:.t=.t.o)
 
 .PHONY: all
 all:
 	$(MAKE) clang.db
-	$(MAKE) a.out
+	$(MAKE) rld.out ld.out
 
 .PHONY: clean
 clean:
-	-rm -f $(TICKETS) a.out
+	-rm -f $(TICKETS) $(OBJECTS) rld.out ld.out
 .PHONY: distclean
 distclean: clean
 	-rm -f musl.json clang.db
@@ -32,43 +36,54 @@ clang.db: musl.json
 	-rm -f $@
 	pstore-import $@ $<
 
-LIBC = \
-	$(LIBC_DIR)/_Exit.t             \
-	$(LIBC_DIR)/__environ.t         \
-	$(LIBC_DIR)/__errno_location.t  \
-	$(LIBC_DIR)/__fpclassifyl.t     \
-	$(LIBC_DIR)/__init_tls.t        \
-	$(LIBC_DIR)/__lctrans.t         \
-	$(LIBC_DIR)/__libc_start_main.t \
-	$(LIBC_DIR)/__lock.t            \
-	$(LIBC_DIR)/__lockfile.t        \
-	$(LIBC_DIR)/__set_thread_area.t \
-	$(LIBC_DIR)/__signbitl.t        \
-	$(LIBC_DIR)/__stdio_close.t     \
-	$(LIBC_DIR)/__stdio_exit.t      \
-	$(LIBC_DIR)/__stdio_seek.t      \
-	$(LIBC_DIR)/__stdio_write.t     \
-	$(LIBC_DIR)/__stdout_write.t    \
-	$(LIBC_DIR)/__towrite.t         \
-	$(LIBC_DIR)/default_attr.t      \
-	$(LIBC_DIR)/defsysinfo.t        \
-	$(LIBC_DIR)/exit.t              \
-	$(LIBC_DIR)/frexpl.t            \
-	$(LIBC_DIR)/fwrite.t            \
-	$(LIBC_DIR)/libc.t              \
-	$(LIBC_DIR)/lseek.t             \
-	$(LIBC_DIR)/memchr.t            \
-	$(LIBC_DIR)/memcpy.t            \
-	$(LIBC_DIR)/memset.t            \
-	$(LIBC_DIR)/ofl.t               \
-	$(LIBC_DIR)/printf.t            \
-	$(LIBC_DIR)/stdout.t            \
-	$(LIBC_DIR)/strerror.t          \
-	$(LIBC_DIR)/strnlen.t           \
-	$(LIBC_DIR)/syscall_ret.t       \
-	$(LIBC_DIR)/vfprintf.t          \
-	$(LIBC_DIR)/wcrtomb.t           \
-	$(LIBC_DIR)/wctomb.t
+# libc tickets/objects
+LIBC_FILES = \
+	_Exit             \
+	__environ         \
+	__errno_location  \
+	__fpclassifyl     \
+	__init_tls        \
+	__lctrans         \
+	__libc_start_main \
+	__lock            \
+	__lockfile        \
+	__set_thread_area \
+	__signbitl        \
+	__stdio_close     \
+	__stdio_exit      \
+	__stdio_seek      \
+	__stdio_write     \
+	__stdout_write    \
+	__towrite         \
+	default_attr      \
+	defsysinfo        \
+	exit              \
+	frexpl            \
+	fwrite            \
+	libc              \
+	lseek             \
+	memchr            \
+	memcpy            \
+	memset            \
+	ofl               \
+	printf            \
+	stdout            \
+	strerror          \
+	strnlen           \
+	syscall_ret       \
+	vfprintf          \
+	wcrtomb           \
+	wctomb
 
-a.out: $(TICKETS)
-	rld -o $@ $(MUSL)/lib/crt1.t $(MUSL)/lib/crt1_asm.t $(MUSL)/lib/crti.t $^ $(LIBC) $(MUSL)/lib/crtn.t
+# Make the list of libc object/ticket files. In each case we take the list of
+# names in $(LIBC_FILES) and stitch the correct path (LIBC_T_DIR or LIBC_TO_DIR)
+# to the start and the correct extention (.t or .t.elf) to the end.
+LIBC_T  = $(patsubst %,$(LIBC_T_DIR)/%.t,$(LIBC_FILES))
+LIBC_TO = $(patsubst %,$(LIBC_TO_DIR)/%.t.elf,$(LIBC_FILES))
+
+rld.out: $(TICKETS)
+	rld -o $@ $(MUSL)/lib/crt1.t $(MUSL)/lib/crt1_asm.t $(MUSL)/lib/crti.t $^ $(LIBC_T) $(MUSL)/lib/crtn.t
+ld.out: $(OBJECTS)
+	ld -o $@ $(MUSL)/lib/crt1.t.o $(MUSL)/lib/crt1_asm.t.o $(MUSL)/lib/crti.t.o $^ $(LIBC_TO) $(MUSL)/lib/crtn.t.o
+
+#eof
