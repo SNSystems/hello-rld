@@ -19,11 +19,11 @@ cd /hello-rld/musl-prepo
 make
 make install
 
-cd /hello-rld/musl
+cd /hello-rld/musl/lib
 mkdir libc_repo
 cd libc_repo
 ar -x ../libc_repo.a
 
 cd /hello-rld
-make
+make rld.out
 ~~~
