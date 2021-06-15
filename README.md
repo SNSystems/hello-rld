@@ -32,7 +32,7 @@ You will be met with the traditional cheery greeting.
 Here’s an example session:
 
 ~~~
-paul@ubuntu:~$ git clone https://github.com/paulhuggett/hello-rld.git
+paul@ubuntu:~$ git clone https://github.com/SNSystems/hello-rld.git
 Cloning into 'hello-rld'...
 
 paul@ubuntu:~$ docker run --rm --tty --interactive -v $(pwd)/hello-rld:/hello-rld paulhuggett/llvm-prepo
