@@ -23,5 +23,5 @@ mkdir libc_repo; ar -x --output libc_repo libc_repo.a
 mkdir libc_elf; ar -x --output libc_elf libc_elf.a
 
 cd /hello-rld
-make rld.out
+make
 ~~~
