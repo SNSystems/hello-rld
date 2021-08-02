@@ -12,6 +12,7 @@ Clone this repository and start the docker container. The freshly cloned code is
 
 ~~~bash
 git clone https://github.com/SNSystems/hello-rld.git
+docker pull paulhuggett/llvm-prepo:latest
 docker run --rm --tty --interactive -v $(pwd)/hello-rld:/hello-rld paulhuggett/llvm-prepo
 ~~~
 
