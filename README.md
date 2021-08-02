@@ -21,13 +21,13 @@ Stepping up the complexity considerably, here’s a version of hello-rld that in
     ./configure --disable-shared --prefix=/hello-rld/musl
     make install-headers install-ticket-libs
     ~~~
-1. Extract the Ticket Files. rld doesn’t yet support static archives, so extract all of the ticket files into a new directory:
+1. Extract the ticket files. rld doesn’t yet support static archives, so extract all of the ticket files into a new directory:
     ~~~bash
     cd /hello-rld/musl/lib
     mkdir libc_repo
     ar -x --output libc_repo libc_repo.a
     ~~~
-1. Hello! Finally, we can build the program and run it:
+1. Finally, we can build the program and run it:
     ~~~bash
     cd /hello-rld
     make
