@@ -12,7 +12,7 @@ Clone this repository and start the docker container. The freshly cloned code is
 ~~~bash
 git clone --recursive -b musl-work https://github.com/SNSystems/hello-rld.git
 docker pull paulhuggett/llvm-prepo:latest
-docker run --rm --tty --interactive -v $(pwd)/hello-rld:/hello-rld paulhuggett/llvm-prepo
+docker run --rm --tty --interactive -v $(pwd)/hello-rld:/hello-rld paulhuggett/llvm-prepo:latest
 ~~~
 
 (If you use a non bash-like shell, replace `$(pwd)` in the third of these commands with the path of your current working directory.)
