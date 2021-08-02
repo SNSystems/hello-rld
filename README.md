@@ -15,7 +15,7 @@ docker pull paulhuggett/llvm-prepo:latest
 docker run --rm --tty --interactive -v $(pwd)/hello-rld:/hello-rld paulhuggett/llvm-prepo
 ~~~
 
-(If you use a non bash-like shell, replace `$(pwd)` in the second of these commands with the path of your current working directory.)
+(If you use a non bash-like shell, replace `$(pwd)` in the third of these commands with the path of your current working directory.)
 
 ### 2. Build the Standard C Library
 
