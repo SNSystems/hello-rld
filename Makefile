@@ -27,12 +27,9 @@ clean:
 	-rm -f $(TICKETS) $(OBJECTS) rld.out ld.out
 .PHONY: distclean
 distclean: clean
-	-rm -f musl.json clang.db
+	-rm -f clang.db
 
-musl.json: $(MUSL)/lib/clang.db
-	pstore-export $< > $@
-
-clang.db: musl.json
+clang.db: $(MUSL)/lib/musl-prepo.json
 	-rm -f $@
 	pstore-import $@ $<
 
