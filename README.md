@@ -36,7 +36,6 @@ Stepping up the complexity considerably, here’s a version of hello-rld that in
     Replacing the traditional cheery greeting, this will dump the main() function’s argv and envp arrays. You should see output something like:
     ~~~~
     prepo@cb352d454ac4:/hello-rld$ ./a.out hello world
-    3
     0: ./a.out
     1: hello
     2: world
