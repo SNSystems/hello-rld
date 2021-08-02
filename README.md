@@ -11,16 +11,12 @@ cd hello-rld
 docker pull paulhuggett/llvm-prepo:latest
 docker run --rm --tty --interactive -v $(pwd):/hello-rld paulhuggett/llvm-prepo:latest
 
-sudo apt-get update
-sudo apt-get -y install python
-
 cd /hello-rld/musl-prepo
 ./configure --disable-shared --prefix=/hello-rld/musl
-make install
+make install-headers install-ticket-libs
 
 cd /hello-rld/musl/lib
 mkdir libc_repo; ar -x --output libc_repo libc_repo.a
-mkdir libc_elf; ar -x --output libc_elf libc_elf.a
 
 cd /hello-rld
 make
