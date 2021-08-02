@@ -1,6 +1,6 @@
 # Hello, (Wo)rld
 
-Stepping up the complexity considerably, here’s a version of hello-rld that incorporates the full might of the musl libc standard library.
+Stepping up the complexity considerably, here’s a version of hello-rld that incorporates the full might of the [musl libc](https://github.com/SNSystems/musl-prepo) standard library.
 
 
 ## Hello Docker
