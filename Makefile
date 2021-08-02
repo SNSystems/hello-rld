@@ -20,7 +20,7 @@ OBJECTS = $(TICKETS:.t=.t.o)
 .PHONY: all
 all:
 	$(MAKE) clang.db
-	$(MAKE) rld.out #ld.out
+	$(MAKE) a.out #ld.out
 
 .PHONY: clean
 clean:
@@ -81,7 +81,7 @@ LIBC_FILES = \
 LIBC_T  = $(patsubst %,$(LIBC_T_DIR)/%.t,$(LIBC_FILES)) ./musl-prepo/obj/src/exit/_Exit.t
 LIBC_TO = $(patsubst %,$(LIBC_TO_DIR)/%.t.elf,$(LIBC_FILES))
 
-rld.out: $(TICKETS)
+a.out: $(TICKETS)
 	rld -o $@ $(MUSL)/lib/crt1.t $(MUSL)/lib/crt1_asm.t $(MUSL)/lib/crti.t $^ $(LIBC_T) $(MUSL)/lib/crtn.t
 ld.out: $(OBJECTS)
 	ld -o $@ $(MUSL)/lib/crt1.t.o $(MUSL)/lib/crt1_asm.t.o $(MUSL)/lib/crti.t.o $^ $(LIBC_TO) $(MUSL)/lib/crtn.t.o
