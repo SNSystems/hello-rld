@@ -7,7 +7,7 @@ Stepping up the complexity considerably, here’s a version of hello-rld that in
 
 1. Clone the repository
     ~~~bash
-    git clone --recursive -b musl-work https://github.com/SNSystems/hello-rld.git
+    git clone --recursive -b libc https://github.com/SNSystems/hello-rld.git
     ~~~
 1. Start the container. The freshly cloned code is mapped to the path `/hello-rld` inside the container.
     ~~~bash
