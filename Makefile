@@ -75,7 +75,7 @@ LIBC_FILES = \
 # Make the list of libc object/ticket files. In each case we take the list of
 # names in $(LIBC_FILES) and stitch the correct path (LIBC_T_DIR or LIBC_TO_DIR)
 # to the start and the correct extention (.t or .t.elf) to the end.
-LIBC_T  = $(patsubst %,$(LIBC_T_DIR)/%.t,$(LIBC_FILES)) ./musl-prepo/obj/src/exit/_Exit.t
+LIBC_T  = $(patsubst %,$(LIBC_T_DIR)/%.t,$(LIBC_FILES))
 LIBC_TO = $(patsubst %,$(LIBC_TO_DIR)/%.t.elf,$(LIBC_FILES))
 
 a.out: $(TICKETS)
