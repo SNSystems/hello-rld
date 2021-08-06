@@ -9,18 +9,19 @@ Stepping up the complexity considerably, here’s a version of hello-rld that in
     ~~~bash
     git clone --recursive -b libc https://github.com/SNSystems/hello-rld.git
     ~~~
-1. Start the container. The freshly cloned code is mapped to the path `/hello-rld` inside the container.
+1. Start the container. We use a build of the compiler whose default triple writes to the respository. The freshly cloned code is mapped to the path `/hello-rld` inside the container.
     ~~~bash
-    docker pull paulhuggett/llvm-prepo:latest
+    docker pull paulhuggett/default-triple
     docker run --rm --tty --interactive       \
                -v $(pwd)/hello-rld:/hello-rld \
-               paulhuggett/llvm-prepo:latest
+               paulhuggett/llvm-prepo:default-triple
     ~~~
     (If you use a non bash-like shell, replace `$(pwd)` in the second of these commands with the path of your current working directory.)
 1. Build the Standard C Library:
     ~~~bash
     cd /hello-rld/musl-prepo
     ./configure --disable-shared --prefix=/hello-rld/musl
+    rm clang.db
     make install-headers install-ticket-libs
     ~~~
 1. Extract the ticket files. rld doesn’t yet support static archives, so extract all of the ticket files into a new directory:
