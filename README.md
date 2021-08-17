@@ -28,7 +28,8 @@ Stepping up the complexity considerably, here’s a version of hello-rld that in
     ~~~bash
     cd /hello-rld/musl/lib
     mkdir libc_repo
-    ar -x --output libc_repo libc_repo.a
+    cd libc_repo
+    ar -x ../libc_repo.a
     ~~~
 1. Finally, we can build the program and run it:
     ~~~bash
