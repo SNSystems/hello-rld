@@ -6,38 +6,48 @@ Stepping up the complexity considerably, here’s a version of hello-rld that in
 ## Hello Docker
 
 1. Clone the repository
+
     ~~~bash
     git clone --recursive -b libc https://github.com/SNSystems/hello-rld.git
     ~~~
+
 1. Start the container. We use a build of the compiler whose default triple writes to the repository. The freshly cloned code is mapped to the path `/hello-rld` inside the container.
+
     ~~~bash
     docker pull paulhuggett/llvm-prepo:default-triple
     docker run --rm --tty --interactive       \
                -v $(pwd)/hello-rld:/hello-rld \
                paulhuggett/llvm-prepo:default-triple
     ~~~
+
     (If you use a non bash-like shell, replace `$(pwd)` in the second of these commands with the path of your current working directory.)
-1. Build the Standard C Library:
+1. Configure, build, and install the Standard C Library:
+
     ~~~bash
     cd /hello-rld/musl-prepo
-    ./configure --disable-shared --prefix=/hello-rld/musl
+    ./configure --disable-shared
     rm clang.db
-    make install-headers install-ticket-libs
+    sudo make install-headers install-ticket-libs
     ~~~
+
 1. Extract the ticket files. rld doesn’t yet support static archives, so extract all of the ticket files into a new directory:
+
     ~~~bash
-    cd /hello-rld/musl/lib
-    mkdir libc_repo
-    cd libc_repo
-    ar -x ../libc_repo.a
+    mkdir /hello-rld/libc
+    cd /hello-rld/libc
+    ar -x /usr/local/musl/lib/libc_repo.a
     ~~~
+
 1. Finally, we can build the program and run it:
+
     ~~~bash
     cd /hello-rld
     make
     ./a.out
     ~~~
+
     Replacing the traditional cheery greeting, this will dump the main() function’s argv and envp arrays. You should see output something like:
+
     ~~~~
     prepo@cb352d454ac4:/hello-rld$ ./a.out hello world
     0: ./a.out
