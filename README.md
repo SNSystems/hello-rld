@@ -9,7 +9,7 @@ Stepping up the complexity considerably, here’s a version of hello-rld that in
     ~~~bash
     git clone --recursive -b libc https://github.com/SNSystems/hello-rld.git
     ~~~
-1. Start the container. We use a build of the compiler whose default triple writes to the respository. The freshly cloned code is mapped to the path `/hello-rld` inside the container.
+1. Start the container. We use a build of the compiler whose default triple writes to the repository. The freshly cloned code is mapped to the path `/hello-rld` inside the container.
     ~~~bash
     docker pull paulhuggett/llvm-prepo:default-triple
     docker run --rm --tty --interactive       \
