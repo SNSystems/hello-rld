@@ -1,9 +1,13 @@
 MUSL = /usr/local/musl
 CFLAGS =  -O0 -nostdinc -isystem $(MUSL)/include
-TICKETS = main.o
+CXX = c++
+CXXFLAGS = $(CFLAGS) -fno-exceptions
+TICKETS = main.o crtbegin.o
 
 %.o: %.c
-	REPOFILE=clang.db $(CC) -o $@ -c $(CFLAGS) $<
+	$(CC) -o $@ -c $(CFLAGS) $<
+%.o: %.cpp
+	$(CXX) -o $@ -c $(CXXFLAGS) $<
 
 .PHONY: all
 all:
@@ -42,18 +46,23 @@ LIBC = \
 	$(LIBC_DIR)/__stdio_write.t     \
 	$(LIBC_DIR)/__stdout_write.t    \
 	$(LIBC_DIR)/__towrite.t         \
+	$(LIBC_DIR)/atexit.t            \
 	$(LIBC_DIR)/default_attr.t      \
 	$(LIBC_DIR)/defsysinfo.t        \
 	$(LIBC_DIR)/exit.t              \
 	$(LIBC_DIR)/frexpl.t            \
 	$(LIBC_DIR)/fwrite.t            \
 	$(LIBC_DIR)/libc.t              \
+	$(LIBC_DIR)/libc_calloc.t       \
+	$(LIBC_DIR)/lite_malloc.t       \
 	$(LIBC_DIR)/lseek.t             \
 	$(LIBC_DIR)/memchr.t            \
 	$(LIBC_DIR)/memcpy.t            \
 	$(LIBC_DIR)/memset.t            \
+	$(LIBC_DIR)/mmap.t              \
 	$(LIBC_DIR)/ofl.t               \
 	$(LIBC_DIR)/printf.t            \
+	$(LIBC_DIR)/replaced.t          \
 	$(LIBC_DIR)/stdout.t            \
 	$(LIBC_DIR)/strerror.t          \
 	$(LIBC_DIR)/strnlen.t           \
