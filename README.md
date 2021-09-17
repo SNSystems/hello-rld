@@ -21,27 +21,20 @@ Stepping up the complexity considerably, here’s a version of hello-rld that in
     ~~~
 
     (If you use a non bash-like shell, replace `$(pwd)` in the second of these commands with the path of your current working directory.)
-1. Configure, build, and install the Standard C Library:
+
+1. Extract the ticket files for the standard C library. rld doesn’t yet support static archives, so extract all of the ticket files into a new directory:
 
     ~~~bash
-    cd /hello-rld/musl-prepo
-    ./configure --disable-shared
-    rm clang.db
-    sudo make install-headers install-ticket-libs
-    ~~~
-
-1. Extract the ticket files. rld doesn’t yet support static archives, so extract all of the ticket files into a new directory:
-
-    ~~~bash
-    mkdir /hello-rld/libc
-    cd /hello-rld/libc
+    cd /hello-rld
+    mkdir libc
+    cd libc
     ar -x /usr/local/musl/lib/libc_repo.a
+    cd ..
     ~~~
 
 1. Finally, we can build the program and run it:
 
     ~~~bash
-    cd /hello-rld
     make
     ./a.out
     ~~~
