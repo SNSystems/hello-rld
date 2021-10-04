@@ -25,6 +25,7 @@ Stepping up the complexity considerably, here’s a version of hello-rld that in
 1. Build the program and run it:
 
     ~~~bash
+    cd hello-rld
     make
     ./a.out
     ~~~
