@@ -1,3 +1,0 @@
-[submodule "musl-prepo"]
-	path = musl-prepo
-	url = https://github.com/SNSystems/musl-prepo

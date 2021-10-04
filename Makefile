@@ -1,8 +1,10 @@
 MUSL = /usr/local/musl
-CFLAGS =  -O0 -nostdinc -isystem $(MUSL)/include
+# TODO: the target should be musl rather than gnu.
+CFLAGS = -target x86_64-pc-linux-gnu-repo -O0 -nostdinc -isystem $(MUSL)/include
 CXX = c++
 CXXFLAGS = $(CFLAGS) -fno-exceptions
 TICKETS = main.o crtbegin.o
+LIBC_DIR = libc
 
 %.o: %.c
 	$(CC) -o $@ -c $(CFLAGS) $<
@@ -21,12 +23,13 @@ clean:
 .PHONY: distclean
 distclean: clean
 	-rm -f clang.db
+	-rm -fr $(LIBC_DIR)
 
-clang.db: $(MUSL)/lib/musl-prepo.json
-	-rm -f $@
-	pstore-import $@ $<
+# Merge the repo containing the standard libraries. Ultimately, this
+# will be automatic and incremental.
+clang.db: /usr/lib/stdlib.repo
+	cp $< $@
 
-LIBC_DIR = /hello-rld/libc
 # libc ticket files
 LIBC = \
 	$(LIBC_DIR)/_Exit.t             \
@@ -70,9 +73,14 @@ LIBC = \
 	$(LIBC_DIR)/vfprintf.t          \
 	$(LIBC_DIR)/wcrtomb.t           \
 	$(LIBC_DIR)/wctomb.t
+
+# Unpack libc. This will be unnecessary once rld understands static archives.
+$(LIBC): $(MUSL)/lib/libc_repo.a
+	mkdir -p $(LIBC_DIR)
+	ar --output=$(LIBC_DIR) x $<
+
 CRTI = $(MUSL)/lib/crt1.t $(MUSL)/lib/crt1_asm.t $(MUSL)/lib/crti.t
 CRTN = $(MUSL)/lib/crtn.t
 
-a.out: $(TICKETS)
-	rld -o $@ $(CRTI) $^ $(LIBC) $(CRTN)
-
+a.out: $(TICKETS) $(LIBC)
+	rld -o $@ $(CRTI) $^ $(CRTN)
