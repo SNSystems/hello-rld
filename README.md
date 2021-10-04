@@ -30,7 +30,7 @@ Stepping up the complexity considerably, here’s a version of hello-rld that in
     ./a.out
     ~~~
 
-    Replacing the traditional cheery greeting, this will dump the main() function’s argv and envp arrays. You should see output something like:
+    Replacing the traditional cheery greeting, this will run the static constructors, dump the main() function’s argv and envp arrays, then run the static destructors. You should see output something like:
 
     ~~~~
     prepo@b3f154afb2fb:/hello-rld$ ./a.out  hello world
