@@ -32,7 +32,7 @@ CFLAGS = \
 
 CXX = c++
 CXXFLAGS = $(CFLAGS) -fno-exceptions -fno-rtti
-TICKETS = main.o crtbegin.o
+TICKETS = main.o
 
 %.o: %.c
 	$(CC) -o $@ -c $(CFLAGS) $<
@@ -312,8 +312,10 @@ $(LIBCXX): /usr/lib/libc++.a
 	mkdir -p $(LIBCXX_DIR)
 	ar --output=$(LIBCXX_DIR) x $<
 
+CRTBEGIN = /usr/lib/linux/clang_rt.crtbegin-x86_64.o
+CRTEND = /usr/lib/linux/clang_rt.crtend-x86_64.o
 CRTI = $(MUSL)/lib/crt1.t $(MUSL)/lib/crt1_asm.t $(MUSL)/lib/crti.t
 CRTN = $(MUSL)/lib/crtn.t
 
 a.out: $(TICKETS) $(LIBC) $(LIBCXXABI) $(LIBCXX)
-	rld -o $@ $(CRTI) $^ $(CRTN)
+	rld -o $@ $(CRTBEGIN) $(CRTI) $^ $(CRTN) $(CRTEND)
