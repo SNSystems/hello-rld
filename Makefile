@@ -167,9 +167,12 @@ LIBC = \
 	$(LIBC_DIR)/memset.t                     \
 	$(LIBC_DIR)/mmap.t                       \
 	$(LIBC_DIR)/mprotect.t                   \
+	$(LIBC_DIR)/mremap.t                     \
 	$(LIBC_DIR)/munmap.t                     \
 	$(LIBC_DIR)/nanosleep.t                  \
 	$(LIBC_DIR)/newlocale.t                  \
+	$(LIBC_DIR)/ngfree.t                     \
+	$(LIBC_DIR)/ngrealloc.t                  \
 	$(LIBC_DIR)/ofl.t                        \
 	$(LIBC_DIR)/posix_memalign.t             \
 	$(LIBC_DIR)/printf.t                     \
