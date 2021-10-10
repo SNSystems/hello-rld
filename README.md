@@ -21,3 +21,13 @@ Hard core. We’re now going for a full C++ implementation which uses iostreams 
     ~~~
 
     (If you use a non bash-like shell, replace `$(pwd)` in the second of these commands with the path of your current working directory.)
+
+1. Build the program and run it:
+
+    ~~~bash
+    cd /hello-rld
+    make
+    ./a.out
+    ~~~
+    
+    You will be met with the traditional cheery greeting.
