@@ -1,11 +1,3 @@
-# Hello, (Wo)rld
-
-A newborn linker emerges blinking into the sunlight. It looks about cautiously before saying its first words to greet the dawn. “Hello, World.”
-
-Almost the simplest possible program, but the traditional starting point and one that can be linked directly from a program repository without the need for traditional object files. It exclusively uses the program repository aware [compiler (clang)](https://github.com/SNSystems/llvm-project-prepo) and [linker (rld)](https://github.com/SNSystems/llvm-project-prepo/tree/master/rld) to create an “end-to-end” solution.
-
-By far the easiest way to share in the glory of this application is to use the [llvm-prepo docker container](https://hub.docker.com/r/paulhuggett/llvm-prepo) which has all of the tools you need pre-installed.
-
 ## Hello Docker
 
 Clone this repository and start the docker container. The freshly cloned code is mapped to the path `/hello-rld` inside the container.
