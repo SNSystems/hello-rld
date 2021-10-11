@@ -13,7 +13,7 @@ docker run --rm --tty --interactive -v $(pwd)/hello-rld:/hello-rld paulhuggett/l
 Build the program and run it:
 
 ~~~bash
-cd /hello-rld
+cd /hello-rld/raw
 make
 ./a.out
 ~~~
