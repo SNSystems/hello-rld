@@ -8,7 +8,7 @@ Stepping up the complexity considerably, here’s a version of hello-rld that in
 1. Clone the repository
 
     ~~~bash
-    git clone -b libc https://github.com/SNSystems/hello-rld.git
+    git clone https://github.com/SNSystems/hello-rld.git
     ~~~
 
 1. Start the container. The freshly cloned code is mapped to the path `/home/prepo/hello-rld`.
@@ -25,7 +25,7 @@ Stepping up the complexity considerably, here’s a version of hello-rld that in
 1. Build the program and run it:
 
     ~~~bash
-    cd hello-rld
+    cd hello-rld/c
     make
     ./a.out
     ~~~
