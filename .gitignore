@@ -1,5 +1,6 @@
 *~
 *.o
-a.out
+*.t
+*.out
 clang.db
-
+musl.json
