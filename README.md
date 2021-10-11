@@ -27,7 +27,7 @@ Hard core. We’re now going for a full C++ implementation which uses [iostreams
     ~~~bash
     cd /hello-rld
     make
-    ./a.out
+    ./hello
     ~~~
     
     You will be met with the traditional cheery greeting.
