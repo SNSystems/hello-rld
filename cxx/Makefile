@@ -310,24 +310,29 @@ LIBCXX = \
 
 # Stitch LIBC_DIR/ on the front and .t on the end of each name in LIBC.
 LIBC_FILES = $(LIBC:%=$(LIBC_DIR)/%.t)
+# Turn the list of files into a list of wildcards we can use to express that
+# one rule produces multiple targets.
+LIBC_TARGETS = $(subst .t,%t, $(LIBC_FILES))
 
 # Stitch LIBCXXABI_DIR/ on the front and .cpp.o on the end of each name in LIBCXXABI.
 LIBCXXABI_FILES = $(LIBCXXABI:%=$(LIBCXXABI_DIR)/%.cpp.o)
+LIBCXXABI_TARGETS = $(subst .cpp.o,.cpp%o,$(LIBCXXABI_FILES))
 
 # Stitch LIBCXX_DIR/ on the front and .cpp.o on the end of each name in LIBCXX.
 LIBCXX_FILES = $(LIBCXX:%=$(LIBCXX_DIR)/%.cpp.o)
+LIBCXX_TARGETS = $(subst .cpp.o,.cpp%o,$(LIBCXX_FILES))
 
 # Unpack libc, libc++abi, and libcxx. This will be unnecessary once rld
 # understands static archives.
-$(LIBC_FILES): $(MUSL)/lib/libc_repo.a
+$(LIBC_TARGETS): $(MUSL)/lib/libc_repo.a
 	mkdir -p $(LIBC_DIR)
 	ar --output=$(LIBC_DIR) x $<
 
-$(LIBCXXABI_FILES): /usr/lib/libc++abi.a
+$(LIBCXXABI_TARGETS): /usr/lib/libc++abi.a
 	mkdir -p $(LIBCXXABI_DIR)
 	ar --output=$(LIBCXXABI_DIR) x $<
 
-$(LIBCXX_FILES): /usr/lib/libc++.a
+$(LIBCXX_TARGETS): /usr/lib/libc++.a
 	mkdir -p $(LIBCXX_DIR)
 	ar --output=$(LIBCXX_DIR) x $<
 
