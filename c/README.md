@@ -34,7 +34,6 @@ Stepping up the complexity considerably, here’s a version of hello-rld that in
 
     ~~~~
     prepo@b3f154afb2fb:/hello-rld$ ./a.out  hello world
-    xtors::xtors
     0: ./a.out
     1: hello
     2: world
@@ -47,6 +46,5 @@ Stepping up the complexity considerably, here’s a version of hello-rld that in
     PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
     OLDPWD=/hello-rld/libc
     _=./a.out
-    xtors::~xtors
     prepo@b3f154afb2fb:/hello-rld$ 
     ~~~~
