@@ -32,7 +32,9 @@ MUSL = /usr/local/musl
 # TODO: the target should be musl rather than gnu.
 CFLAGS = \
 	-target x86_64-pc-linux-gnu-repo \
-	-O3 \
+	-fno-exceptions \
+	-fno-rtti \
+	-O0 \
 	-nostdinc \
 	-isystem /usr/include/c++/v1 \
 	-isystem $(MUSL)/include
