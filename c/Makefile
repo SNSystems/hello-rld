@@ -5,7 +5,6 @@ CFLAGS =                                 \
 	-O0                              \
 	-nostdinc                        \
 	-isystem $(MUSL)/include
-TICKETS = main.o
 LIBC_DIR = libc
 
 .PHONY: all
@@ -15,12 +14,12 @@ all:
 
 .PHONY: clean
 clean:
-	-rm -f $(TICKETS) a.out
+	-rm -f main.o libc.txt a.out
+	-rm -fr $(LIBC_DIR)
 
 .PHONY: distclean
 distclean: clean
 	-rm -f clang.db
-	-rm -fr $(LIBC_DIR)
 
 # Merge the repo containing the standard libraries. Ultimately, this
 # will be automatic and incremental.
@@ -76,16 +75,18 @@ LIBC_FILES = $(LIBC:%=$(LIBC_DIR)/%.t)
 
 # Turn the list of files into a list of wildcards we can use to express that
 # one rule produces multiple targets.
-
 LIBC_TARGETS = $(subst .t,%t,$(LIBC_FILES))
-# Unpack libc. This will be unnecessary once rld understands static archives.
 
+# Unpack libc. This will be unnecessary once rld understands static archives.
 $(LIBC_TARGETS): $(MUSL)/lib/libc_repo.a
 	mkdir -p $(LIBC_DIR)
 	ar --output=$(LIBC_DIR) x $<
+# Create a response file which can be used to link the libc tickets.
+libc.txt: $(LIBC_FILES)
+	echo $^ > $@
 
 CRTI = $(MUSL)/lib/crt1.t $(MUSL)/lib/crt1_asm.t $(MUSL)/lib/crti.t
 CRTN = $(MUSL)/lib/crtn.t
 
-a.out: $(TICKETS) $(LIBC_FILES)
-	rld -o $@ $(CRTI) $^ $(CRTN)
+a.out: main.o libc.txt
+	rld -o $@ $(CRTI) main.o @libc.txt $(CRTN)
