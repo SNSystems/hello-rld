@@ -14,10 +14,10 @@ Hard core. We’re now going for a full C++ implementation which uses [iostreams
 1. Start the container. The freshly cloned code is mapped to the path `/home/prepo/hello-rld`.
 
     ~~~bash
-    docker pull paulhuggett/llvm-prepo:latest
+    docker pull sndevelopment/llvm-prepo:latest
     docker run --rm --tty --interactive                  \
                -v $(pwd)/hello-rld:/home/prepo/hello-rld \
-               paulhuggett/llvm-prepo:latest
+               sndevelopment/llvm-prepo:latest
     ~~~
 
     (If you use a non bash-like shell, replace `$(pwd)` in the second of these commands with the path of your current working directory.)

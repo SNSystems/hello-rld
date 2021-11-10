@@ -4,8 +4,8 @@ Clone this repository and start the docker container. The freshly cloned code is
 
 ~~~bash
 git clone https://github.com/SNSystems/hello-rld.git
-docker pull paulhuggett/llvm-prepo:latest
-docker run --rm --tty --interactive -v $(pwd)/hello-rld:/hello-rld paulhuggett/llvm-prepo:latest
+docker pull sndevelopment/llvm-prepo:latest
+docker run --rm --tty --interactive -v $(pwd)/hello-rld:/hello-rld sndevelopment/llvm-prepo:latest
 ~~~
 
 (If you use a non bash-like shell, replace `$(pwd)` in the second of these commands with the path of your current working directory.)
@@ -28,7 +28,7 @@ Here’s an example session:
 paul@ubuntu:~$ git clone https://github.com/SNSystems/hello-rld.git
 Cloning into 'hello-rld'...
 
-paul@ubuntu:~$ docker run --rm --tty --interactive -v $(pwd)/hello-rld:/hello-rld paulhuggett/llvm-prepo
+paul@ubuntu:~$ docker run --rm --tty --interactive -v $(pwd)/hello-rld:/hello-rld sndevelopment/llvm-prepo
 To run a command as administrator (user "root"), use "sudo <command>".
 See "man sudo_root" for details.
 
