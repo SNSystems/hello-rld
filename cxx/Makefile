@@ -41,9 +41,6 @@ CXXFLAGS = \
 	-isystem /usr/include/c++/v1     \
 	-isystem $(MUSL)/include
 
-%.o: %.cpp
-	$(CXX) -o $@ -c $(CXXFLAGS) $<
-
 .PHONY: all
 all:
 	$(MAKE) clang.db
@@ -52,15 +49,18 @@ all:
 .PHONY: clean
 clean:
 	-rm -f hello.o hello
+	-rm -fr lib
+	-rm -f libc.txt libcxxabi.txt libcxx.txt
+
+.PHONY: distclean
+distclean: clean
+	-rm -f clang.db
 
 LIBC_DIR      = lib/c
 LIBCXXABI_DIR = lib/cxxabi
 LIBCXX_DIR    = lib/cxx
 
-.PHONY: distclean
-distclean: clean
-	-rm -f clang.db
-	-rm -fr lib
+
 
 # Start with the repo containing the standard libraries. Ultimately, this
 # will be automatic and incremental.
@@ -327,22 +327,28 @@ LIBCXX_TARGETS = $(subst .cpp.o,.cpp%o,$(LIBCXX_FILES))
 $(LIBC_TARGETS): $(MUSL)/lib/libc_repo.a
 	mkdir -p $(LIBC_DIR)
 	ar --output=$(LIBC_DIR) x $<
+libc.txt: $(LIBC_FILES)
+	echo $^ > $@
 
 $(LIBCXXABI_TARGETS): /usr/lib/libc++abi.a
 	mkdir -p $(LIBCXXABI_DIR)
 	ar --output=$(LIBCXXABI_DIR) x $<
+libcxxabi.txt: $(LIBCXXABI_FILES)
+	echo $^ > $@
 
 $(LIBCXX_TARGETS): /usr/lib/libc++.a
 	mkdir -p $(LIBCXX_DIR)
 	ar --output=$(LIBCXX_DIR) x $<
+libcxx.txt: $(LIBCXX_FILES)
+	echo $^ > $@
 
 CRTBEGIN = /usr/lib/linux/clang_rt.crtbegin-x86_64.o
 CRTEND = /usr/lib/linux/clang_rt.crtend-x86_64.o
 CRTI = $(MUSL)/lib/crt1.t $(MUSL)/lib/crt1_asm.t $(MUSL)/lib/crti.t
 CRTN = $(MUSL)/lib/crtn.t
 
-hello: hello.o $(LIBC_FILES) $(LIBCXXABI_FILES) $(LIBCXX_FILES)
-	rld -o $@ $(CRTBEGIN) $(CRTI) $^ $(CRTN) $(CRTEND)
+hello: hello.o libc.txt libcxxabi.txt libcxx.txt
+	rld -o $@ $(CRTBEGIN) $(CRTI) hello.o @libc.txt @libcxxabi.txt @libcxx.txt $(CRTN) $(CRTEND)
 
 # A debugging helper. Use 'make print-X' to display the value of variable X.
 print-%: ; @echo $*=$($*)
