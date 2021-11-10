@@ -28,23 +28,19 @@
 #
 # [1] https://github.com/SNSystems/llvm-project-prepo/wiki/Exploring-a-Program-Repository#repo-fragments
 
+# The directory in which musl libc is installed.
 MUSL = /usr/local/musl
-# TODO: the target should be musl rather than gnu.
-CFLAGS = \
-	-target x86_64-pc-linux-gnu-repo \
-	-fno-exceptions \
-	-fno-rtti \
-	-O0 \
-	-nostdinc \
-	-isystem /usr/include/c++/v1 \
-	-isystem $(MUSL)/include
 
 CXX = c++
-CXXFLAGS = $(CFLAGS) -fno-exceptions -fno-rtti
-TICKETS = main.o
+CXXFLAGS = \
+	-target x86_64-pc-linux-gnu-repo \
+	-fno-exceptions                  \
+	-fno-rtti                        \
+	-O0                              \
+	-nostdinc                        \
+	-isystem /usr/include/c++/v1     \
+	-isystem $(MUSL)/include
 
-%.o: %.c
-	$(CC) -o $@ -c $(CFLAGS) $<
 %.o: %.cpp
 	$(CXX) -o $@ -c $(CXXFLAGS) $<
 
@@ -55,7 +51,7 @@ all:
 
 .PHONY: clean
 clean:
-	-rm -f $(TICKETS) hello
+	-rm -f hello.o hello
 
 LIBC_DIR      = lib/c
 LIBCXXABI_DIR = lib/cxxabi
@@ -313,11 +309,13 @@ LIBCXX = \
 # Stitch LIBC_DIR/ on the front and .t on the end of each name in LIBC.
 LIBC_FILES = $(LIBC:%=$(LIBC_DIR)/%.t)
 # Turn the list of files into a list of wildcards we can use to express that
-# one rule produces multiple targets.
-LIBC_TARGETS = $(subst .t,%t, $(LIBC_FILES))
+# one rule produces multiple targets. We swap the .t on the end of each file
+# name to %t.
+LIBC_TARGETS = $(subst .t,%t,$(LIBC_FILES))
 
 # Stitch LIBCXXABI_DIR/ on the front and .cpp.o on the end of each name in LIBCXXABI.
 LIBCXXABI_FILES = $(LIBCXXABI:%=$(LIBCXXABI_DIR)/%.cpp.o)
+# As for LIBC_TARGETS, turn the list of files into a list of wildcards.
 LIBCXXABI_TARGETS = $(subst .cpp.o,.cpp%o,$(LIBCXXABI_FILES))
 
 # Stitch LIBCXX_DIR/ on the front and .cpp.o on the end of each name in LIBCXX.
@@ -343,7 +341,7 @@ CRTEND = /usr/lib/linux/clang_rt.crtend-x86_64.o
 CRTI = $(MUSL)/lib/crt1.t $(MUSL)/lib/crt1_asm.t $(MUSL)/lib/crti.t
 CRTN = $(MUSL)/lib/crtn.t
 
-hello: $(TICKETS) $(LIBC_FILES) $(LIBCXXABI_FILES) $(LIBCXX_FILES)
+hello: hello.o $(LIBC_FILES) $(LIBCXXABI_FILES) $(LIBCXX_FILES)
 	rld -o $@ $(CRTBEGIN) $(CRTI) $^ $(CRTN) $(CRTEND)
 
 # A debugging helper. Use 'make print-X' to display the value of variable X.
