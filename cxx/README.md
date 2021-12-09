@@ -25,7 +25,7 @@ Hard core. We’re now going for a full C++ implementation which uses [iostreams
 1. Build the program and run it:
 
     ~~~bash
-    cd /hello-rld/cxx
+    cd hello-rld/cxx
     make
     ./hello
     ~~~
