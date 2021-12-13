@@ -50,7 +50,7 @@ all:
 clean:
 	-rm -f hello.o hello
 	-rm -fr lib
-	-rm -f libc.txt libcxxabi.txt libcxx.txt
+	-rm -f libc.response libcxxabi.response libcxx.response
 
 .PHONY: distclean
 distclean: clean
@@ -327,19 +327,19 @@ LIBCXX_TARGETS = $(subst .cpp.o,.cpp%o,$(LIBCXX_FILES))
 $(LIBC_TARGETS): $(MUSL)/lib/libc_repo.a
 	mkdir -p $(LIBC_DIR)
 	ar --output=$(LIBC_DIR) x $<
-libc.txt: $(LIBC_FILES)
+libc.response: $(LIBC_FILES)
 	echo $^ > $@
 
 $(LIBCXXABI_TARGETS): /usr/lib/libc++abi.a
 	mkdir -p $(LIBCXXABI_DIR)
 	ar --output=$(LIBCXXABI_DIR) x $<
-libcxxabi.txt: $(LIBCXXABI_FILES)
+libcxxabi.response: $(LIBCXXABI_FILES)
 	echo $^ > $@
 
 $(LIBCXX_TARGETS): /usr/lib/libc++.a
 	mkdir -p $(LIBCXX_DIR)
 	ar --output=$(LIBCXX_DIR) x $<
-libcxx.txt: $(LIBCXX_FILES)
+libcxx.response: $(LIBCXX_FILES)
 	echo $^ > $@
 
 CRTBEGIN = /usr/lib/linux/clang_rt.crtbegin-x86_64.o
@@ -347,8 +347,12 @@ CRTEND = /usr/lib/linux/clang_rt.crtend-x86_64.o
 CRTI = $(MUSL)/lib/crt1.t $(MUSL)/lib/crt1_asm.t $(MUSL)/lib/crti.t
 CRTN = $(MUSL)/lib/crtn.t
 
-hello: hello.o libc.txt libcxxabi.txt libcxx.txt
-	rld -o $@ $(CRTBEGIN) $(CRTI) hello.o @libc.txt @libcxxabi.txt @libcxx.txt $(CRTN) $(CRTEND)
+hello: hello.o libc.response libcxxabi.response libcxx.response
+	rld -o $@ \
+		$(CRTBEGIN) $(CRTI) \
+		hello.o \
+		@libc.response @libcxxabi.response @libcxx.response \
+		$(CRTN) $(CRTEND)
 
 # A debugging helper. Use 'make print-X' to display the value of variable X.
 print-%: ; @echo $*=$($*)

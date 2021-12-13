@@ -14,7 +14,7 @@ all:
 
 .PHONY: clean
 clean:
-	-rm -f main.o libc.txt a.out
+	-rm -f main.o libc.response a.out
 	-rm -fr $(LIBC_DIR)
 
 .PHONY: distclean
@@ -82,11 +82,11 @@ $(LIBC_TARGETS): $(MUSL)/lib/libc_repo.a
 	mkdir -p $(LIBC_DIR)
 	ar --output=$(LIBC_DIR) x $<
 # Create a response file which can be used to link the libc tickets.
-libc.txt: $(LIBC_FILES)
+libc.response: $(LIBC_FILES)
 	echo $^ > $@
 
 CRTI = $(MUSL)/lib/crt1.t $(MUSL)/lib/crt1_asm.t $(MUSL)/lib/crti.t
 CRTN = $(MUSL)/lib/crtn.t
 
-a.out: main.o libc.txt
-	rld -o $@ $(CRTI) main.o @libc.txt $(CRTN)
+a.out: main.o libc.response
+	rld -o $@ $(CRTI) main.o @libc.response $(CRTN)

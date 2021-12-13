@@ -2,5 +2,6 @@
 *.o
 *.t
 *.out
+*.response
 clang.db
 musl.json
