@@ -1,0 +1,42 @@
+name: Build
+on:
+    workflow_dispatch:
+jobs:
+    raw:
+        runs-on: ubuntu-latest
+        container:
+            image: sndevelopment/llvm-prepo:latest
+        steps:
+            - uses: actions/checkout@v2
+            - name: Build
+              shell: bash
+              run: |
+                  cd "${{ runner.workspace }}/raw"
+                  make
+                  ./a.out
+
+    c:
+        runs-on: ubuntu-latest
+        container:
+            image: sndevelopment/llvm-prepo:latest
+        steps:
+            - uses: actions/checkout@v2
+            - name: Build
+              shell: bash
+              run: |
+                  cd "${{ runner.workspace }}/c"
+                  make
+                  ./a.out hello world
+
+    cxx:
+        runs-on: ubuntu-latest
+        container:
+            image: sndevelopment/llvm-prepo:latest
+        steps:
+            - uses: actions/checkout@v2
+            - name: Build
+              shell: bash
+              run: |
+                  cd "${{ runner.workspace }}/c"
+                  make
+                  .hello
