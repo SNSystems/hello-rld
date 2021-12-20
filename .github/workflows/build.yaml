@@ -28,11 +28,17 @@ jobs:
         container:
             image: sndevelopment/llvm-prepo:latest
         steps:
+            - name: Install Git
+              run: |
+                  apt-get update
+                  apt-get install -y git
+
             - uses: actions/checkout@v2
+
             - name: Build
               shell: bash
               run: |
-                  cd "${{ runner.workspace }}/c"
+                  cd "$GITHUB_WORKSPACE/c"
                   make
                   ./a.out hello world
 
@@ -41,10 +47,16 @@ jobs:
         container:
             image: sndevelopment/llvm-prepo:latest
         steps:
+            - name: Install Git
+              run: |
+                  apt-get update
+                  apt-get install -y git
+
             - uses: actions/checkout@v2
+
             - name: Build
               shell: bash
               run: |
-                  cd "${{ runner.workspace }}/c"
+                  cd "$GITHUB_WORKSPACE/cxx"
                   make
-                  .hello
+                  ./hello
