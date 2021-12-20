@@ -8,6 +8,7 @@ jobs:
             image: sndevelopment/llvm-prepo:latest
         steps:
             - uses: actions/checkout@v2
+              path: /home/prepo/hello-rld
             - name: Build
               shell: bash
               run: |
