@@ -6,10 +6,16 @@ jobs:
         runs-on: ubuntu-latest
         container:
             image: sndevelopment/llvm-prepo:latest
+            options: "-u 0 --entrypoint /bin/bash"
+
         steps:
+            - name: Install Git
+              run: |
+                  apt-get update
+                  apt-get install -y git
+
             - uses: actions/checkout@v2
-              with:
-                  path: /home/prepo/hello-rld
+
             - name: Build
               shell: bash
               run: |
