@@ -19,7 +19,7 @@ jobs:
             - name: Build
               shell: bash
               run: |
-                  cd "${{ runner.workspace }}/raw"
+                  cd "$GITHUB_WORKSPACE/raw"
                   make
                   ./a.out
 
