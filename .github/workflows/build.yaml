@@ -6,14 +6,20 @@ jobs:
         runs-on: ubuntu-latest
         container:
             image: sndevelopment/llvm-prepo:latest
+            options: -u 0
+
         steps:
+            - name: Install Git
+              run: |
+                  apt-get update
+                  apt-get install -y git
+
             - uses: actions/checkout@v2
-              with:
-                  path: /home/prepo/hello-rld
+
             - name: Build
               shell: bash
               run: |
-                  cd "${{ runner.workspace }}/raw"
+                  cd "$GITHUB_WORKSPACE/raw"
                   make
                   ./a.out
 
@@ -21,12 +27,20 @@ jobs:
         runs-on: ubuntu-latest
         container:
             image: sndevelopment/llvm-prepo:latest
+            options: -u 0
+
         steps:
+            - name: Install Git
+              run: |
+                  apt-get update
+                  apt-get install -y git
+
             - uses: actions/checkout@v2
+
             - name: Build
               shell: bash
               run: |
-                  cd "${{ runner.workspace }}/c"
+                  cd "$GITHUB_WORKSPACE/c"
                   make
                   ./a.out hello world
 
@@ -34,11 +48,19 @@ jobs:
         runs-on: ubuntu-latest
         container:
             image: sndevelopment/llvm-prepo:latest
+            options: -u 0
+
         steps:
+            - name: Install Git
+              run: |
+                  apt-get update
+                  apt-get install -y git
+
             - uses: actions/checkout@v2
+
             - name: Build
               shell: bash
               run: |
-                  cd "${{ runner.workspace }}/c"
+                  cd "$GITHUB_WORKSPACE/cxx"
                   make
-                  .hello
+                  ./hello
