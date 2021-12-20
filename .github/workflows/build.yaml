@@ -6,7 +6,7 @@ jobs:
         runs-on: ubuntu-latest
         container:
             image: sndevelopment/llvm-prepo:latest
-            options: "-u 0 --entrypoint /bin/bash"
+            options: -u 0
 
         steps:
             - name: Install Git
