@@ -28,4 +28,4 @@ CRTI = $(MUSL)/lib/crt1.t $(MUSL)/lib/crt1_asm.t $(MUSL)/lib/crti.t
 CRTN = $(MUSL)/lib/crtn.t
 
 a.out: main.o
-	../rld -o $@ $(CRTI) main.o $(MUSL)/lib/libc_repo.a $(CRTN)
+	rld -o $@ $(CRTI) main.o $(MUSL)/lib/libc_repo.a $(CRTN)
