@@ -1,7 +1,7 @@
 #
 # A makefile for the C++ iostreams version of the "hello world" demo.
-# This will become a lot simpler once static libraries and auto-merge features
-# are implemented in rld.
+# This will become a lot simpler once auto-merge features are implemented in
+# rld.
 #
 ############################
 #
@@ -50,13 +50,12 @@ all:
 clean:
 	-rm -f hello.o hello
 	-rm -fr lib
-	-rm -f libc.response libcxxabi.response libcxx.response
+	-rm -f libcxxabi.response libcxx.response
 
 .PHONY: distclean
 distclean: clean
 	-rm -f clang.db
 
-LIBC_DIR      = lib/c
 LIBCXXABI_DIR = lib/cxxabi
 LIBCXX_DIR    = lib/cxx
 
@@ -66,216 +65,6 @@ LIBCXX_DIR    = lib/cxx
 # will be automatic and incremental.
 clang.db: /usr/lib/stdlib.repo
 	cp $< $@
-
-# libc ticket files
-LIBC = \
-	_Exit                      \
-        __ctype_get_mb_cur_max     \
-        __environ                  \
-	__errno_location           \
-	__fpclassifyl              \
-	__init_tls                 \
-	__lctrans                  \
-	__libc_start_main          \
-	__lock                     \
-	__lockfile                 \
-	__map_file                 \
-	__mo_lookup                \
-	__month_to_secs            \
-	__overflow                 \
-	__set_thread_area          \
-	__signbitl                 \
-	__stdio_close              \
-	__stdio_exit               \
-	__stdio_read               \
-	__stdio_seek               \
-	__stdio_write              \
-	__stdout_write             \
-	__syscall_cp               \
-	__timedwait                \
-	__tm_to_secs               \
-	__toread                   \
-	__towrite                  \
-	__tz                       \
-	__uflow                    \
-	__wait                     \
-	__year_to_secs             \
-	abort                      \
-	abort_lock                 \
-	aligned_alloc              \
-	atexit                     \
-	bcmp                       \
-	block                      \
-	bsearch                    \
-	btowc                      \
-	c_locale                   \
-	catclose                   \
-	catgets                    \
-	catopen                    \
-	clock_gettime              \
-	clock_nanosleep            \
-	copysignl                  \
-	default_attr               \
-	defsysinfo                 \
-	exit                       \
-	fabsl                      \
-	fflush                     \
-	floatscan                  \
-	fmodl                      \
-	fprintf                    \
-	fputc                      \
-	fputwc                     \
-	free                       \
-	freelocale                 \
-	frexpl                     \
-	fwide                      \
-	fwrite                     \
-	getc                       \
-	getenv                     \
-	getrlimit                  \
-	internal                   \
-	intscan                    \
-	isblank                    \
-	isdigit                    \
-	islower                    \
-	isupper                    \
-	iswalpha                   \
-	iswblank                   \
-	iswcntrl                   \
-	iswdigit                   \
-	iswlower                   \
-	iswprint                   \
-	iswpunct                   \
-	iswspace                   \
-	iswupper                   \
-	iswxdigit                  \
-	isxdigit                   \
-	langinfo                   \
-	libc                       \
-	libc_calloc                \
-	lite_malloc                \
-	locale_map                 \
-	localeconv                 \
-	lseek                      \
-	madvise                    \
-	malloc                     \
-	mbrlen                     \
-	mbrtowc                    \
-	mbsinit                    \
-	mbsnrtowcs                 \
-	mbsrtowcs                  \
-	mbtowc                     \
-	memchr                     \
-	memcmp                     \
-	memcpy                     \
-	memmove                    \
-	memset                     \
-	mmap                       \
-	mprotect                   \
-	mremap                     \
-	munmap                     \
-	nanosleep                  \
-	newlocale                  \
-	ngfree                     \
-	ngrealloc                  \
-	ofl                        \
-	posix_memalign             \
-	printf                     \
-	pthread_cond_broadcast     \
-	pthread_cond_destroy       \
-	pthread_cond_signal        \
-	pthread_cond_timedwait     \
-	pthread_cond_wait          \
-	pthread_detach             \
-	pthread_equal              \
-	pthread_getspecific        \
-	pthread_join               \
-	pthread_key_create         \
-	pthread_mutex_destroy      \
-	pthread_mutex_init         \
-	pthread_mutex_lock         \
-	pthread_mutex_timedlock    \
-	pthread_mutex_trylock      \
-	pthread_mutex_unlock       \
-	pthread_mutexattr_destroy  \
-	pthread_mutexattr_init     \
-	pthread_mutexattr_settype  \
-	pthread_rwlock_rdlock      \
-	pthread_rwlock_timedrdlock \
-	pthread_rwlock_timedwrlock \
-	pthread_rwlock_tryrdlock   \
-	pthread_rwlock_trywrlock   \
-	pthread_rwlock_unlock      \
-	pthread_rwlock_wrlock      \
-	pthread_self               \
-	pthread_setcancelstate     \
-	pthread_setspecific        \
-	pthread_testcancel         \
-	raise                      \
-	realloc                    \
-	replaced                   \
-	scalbn                     \
-	scalbnl                    \
-	sched_yield                \
-	setlocale                  \
-	shgetc                     \
-	snprintf                   \
-	sscanf                     \
-	stderr                     \
-	stdin                      \
-	stdout                     \
-	stpcpy                     \
-	strchr                     \
-	strchrnul                  \
-	strcmp                     \
-	strcoll                    \
-	strcpy                     \
-	strcspn                    \
-	strerror                   \
-	strerror_r                 \
-	strftime                   \
-	strlen                     \
-	strncmp                    \
-	strnlen                    \
-	strtod                     \
-	strtol                     \
-	strxfrm                    \
-	swprintf                   \
-	syscall                    \
-	syscall_ret                \
-	sysconf                    \
-	sysinfo                    \
-	tolower                    \
-	toupper                    \
-	towctrans                  \
-	ungetc                     \
-	uselocale                  \
-	vasprintf                  \
-	vdso                       \
-	vfprintf                   \
-	vfscanf                    \
-	vfwprintf                  \
-	vmlock                     \
-	vsnprintf                  \
-	vsscanf                    \
-	vswprintf                  \
-	wcrtomb                    \
-	wcschr                     \
-	wcscmp                     \
-	wcscoll                    \
-	wcslen                     \
-	wcsnlen                    \
-	wcsnrtombs                 \
-	wcstod                     \
-	wcstol                     \
-	wcsxfrm                    \
-	wctob                      \
-	wctomb                     \
-	wmemchr                    \
-	wmemcmp                    \
-	wmemcpy                    \
-	wmemmove                   \
-	wmemset
 
 LIBCXXABI = \
 	abort_message        \
@@ -306,13 +95,6 @@ LIBCXX = \
 	thread                        \
 	vector
 
-# Stitch LIBC_DIR/ on the front and .t on the end of each name in LIBC.
-LIBC_FILES = $(LIBC:%=$(LIBC_DIR)/%.t)
-# Turn the list of files into a list of wildcards we can use to express that
-# one rule produces multiple targets. We swap the .t on the end of each file
-# name to %t.
-LIBC_TARGETS = $(subst .t,%t,$(LIBC_FILES))
-
 # Stitch LIBCXXABI_DIR/ on the front and .cpp.o on the end of each name in LIBCXXABI.
 LIBCXXABI_FILES = $(LIBCXXABI:%=$(LIBCXXABI_DIR)/%.cpp.o)
 # As for LIBC_TARGETS, turn the list of files into a list of wildcards.
@@ -321,14 +103,6 @@ LIBCXXABI_TARGETS = $(subst .cpp.o,.cpp%o,$(LIBCXXABI_FILES))
 # Stitch LIBCXX_DIR/ on the front and .cpp.o on the end of each name in LIBCXX.
 LIBCXX_FILES = $(LIBCXX:%=$(LIBCXX_DIR)/%.cpp.o)
 LIBCXX_TARGETS = $(subst .cpp.o,.cpp%o,$(LIBCXX_FILES))
-
-# Unpack libc, libc++abi, and libcxx. This will be unnecessary once rld
-# understands static archives.
-$(LIBC_TARGETS): $(MUSL)/lib/libc_repo.a
-	mkdir -p $(LIBC_DIR)
-	ar --output=$(LIBC_DIR) x $<
-libc.response: $(LIBC_FILES)
-	echo $^ > $@
 
 $(LIBCXXABI_TARGETS): /usr/lib/libc++abi.a
 	mkdir -p $(LIBCXXABI_DIR)
@@ -344,15 +118,10 @@ libcxx.response: $(LIBCXX_FILES)
 
 CRTBEGIN = /usr/lib/linux/clang_rt.crtbegin-x86_64.o
 CRTEND = /usr/lib/linux/clang_rt.crtend-x86_64.o
-CRTI = $(MUSL)/lib/crt1.t $(MUSL)/lib/crt1_asm.t $(MUSL)/lib/crti.t
-CRTN = $(MUSL)/lib/crtn.t
+CRT1 = $(MUSL)/lib/crt1.t $(MUSL)/lib/crt1_asm.t
 
-hello: hello.o libc.response libcxxabi.response libcxx.response
-	rld -o $@ \
-		$(CRTBEGIN) $(CRTI) \
-		hello.o \
-		@libc.response @libcxxabi.response @libcxx.response \
-		$(CRTN) $(CRTEND)
+hello: hello.o libcxxabi.response libcxx.response
+	rld -o $@ $(CRTBEGIN) $(CRT1) hello.o $(MUSL)/lib/libc_repo.a @libcxxabi.response @libcxx.response $(CRTEND)
 
 # A debugging helper. Use 'make print-X' to display the value of variable X.
 print-%: ; @echo $*=$($*)
