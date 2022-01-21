@@ -9,13 +9,10 @@ MUSL = /usr/local/musl
 
 CXX = c++
 CXXFLAGS = \
-	-target x86_64-pc-linux-gnu-repo \
-	-fno-exceptions                  \
-	-fno-rtti                        \
-	-O0                              \
-	-nostdinc                        \
-	-isystem /usr/include/c++/v1     \
-	-isystem $(MUSL)/include
+	-target x86_64-pc-linux-musl-repo \
+	-fno-exceptions                   \
+	-fno-rtti                         \
+	-O0
 
 .PHONY: all
 all:
@@ -35,9 +32,5 @@ distclean: clean
 clang.db: /usr/lib/stdlib.repo
 	cp $< $@
 
-CRTBEGIN = /usr/lib/linux/clang_rt.crtbegin-x86_64.o
-CRTEND = /usr/lib/linux/clang_rt.crtend-x86_64.o
-CRT1 = $(MUSL)/lib/crt1.t $(MUSL)/lib/crt1_asm.t
-
 hello: hello.o
-	rld -o $@ $(CRTBEGIN) $(CRT1) $^ $(MUSL)/lib/libc_repo.a /usr/lib/libc++abi.a /usr/lib/libc++.a $(CRTEND)
+	$(CXX) -o $@ -target x86_64-pc-linux-musl-repo $^

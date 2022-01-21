@@ -1,10 +1,6 @@
-MUSL = /usr/local/musl
-# TODO: the target should be musl rather than gnu.
-CFLAGS =                                 \
-	-target x86_64-pc-linux-gnu-repo \
-	-O0                              \
-	-nostdinc                        \
-	-isystem $(MUSL)/include
+CFLAGS =                                  \
+	-target x86_64-pc-linux-musl-repo \
+	-O0
 
 .PHONY: all
 all:
@@ -24,7 +20,5 @@ distclean: clean
 clang.db: /usr/lib/stdlib.repo
 	cp $< $@
 
-CRTI = $(MUSL)/lib/crt1.t $(MUSL)/lib/crt1_asm.t
-
 a.out: main.o
-	rld -o $@ $(CRTI) main.o $(MUSL)/lib/libc_repo.a
+	$(CC) -o $@ -target x86_64-pc-linux-musl-repo main.o
