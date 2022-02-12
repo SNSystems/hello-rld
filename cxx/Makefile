@@ -4,9 +4,6 @@
 # rld.
 #
 
-# The directory in which musl libc is installed.
-MUSL = /usr/local/musl
-
 CXX = c++
 CXXFLAGS = \
 	-target x86_64-pc-linux-musl-repo \
