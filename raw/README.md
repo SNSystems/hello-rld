@@ -35,8 +35,8 @@ See "man sudo_root" for details.
 prepo@4904255ad380:~$ cd /hello-rld
 
 prepo@4904255ad380:/hello$ make
-cc -o start.o -c -O0 -target x86_64-pc-linux-gnu-repo start.c
-cc -o main.o -c -O0 -target x86_64-pc-linux-gnu-repo main.c
+cc -o start.o -c start.c
+cc -o main.o -c main.c
 rld -o a.out start.o main.o
 
 prepo@4904255ad380:/hello$ ./a.out
