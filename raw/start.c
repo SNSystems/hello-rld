@@ -1,4 +1,4 @@
-#include "syscall.h"
+#include <syscall.h>
 extern int main();
 void _start () {
     int exit_status = main ();

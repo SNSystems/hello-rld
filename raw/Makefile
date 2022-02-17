@@ -9,8 +9,5 @@ clean:
 distclean: clean
 	-rm -f clang.db
 
-main.c: syscall.h
-start.c: syscall.h
-
 a.out: main.o start.o
 	rld -o $@ $^

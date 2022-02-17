@@ -1,4 +1,4 @@
-#include "syscall.h"
+#include <syscall.h>
 
 static void write(char const * buf, unsigned long long size) {
     // %rax | System call | %rdi            | %rsi             | %rdx
