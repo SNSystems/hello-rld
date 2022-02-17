@@ -1,12 +1,10 @@
-CFLAGS = -O0 -target x86_64-pc-linux-gnu-repo
-
-TICKETS = start.o main.o
-
+# An example that uses the Program Repository toolchain to build a simple
+# "hello world example that does not use the standard libraries.
 .PHONY: all
 all: a.out
 .PHONY: clean
 clean:
-	-rm -f $(TICKETS) a.out
+	-rm -f main.o start.o a.out
 .PHONY: distclean
 distclean: clean
 	-rm -f clang.db
@@ -14,5 +12,5 @@ distclean: clean
 main.c: syscall.h
 start.c: syscall.h
 
-a.out: $(TICKETS)
+a.out: main.o start.o
 	rld -o $@ $^
