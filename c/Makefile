@@ -1,7 +1,3 @@
-CFLAGS =                                  \
-	-target x86_64-pc-linux-musl-repo \
-	-O0
-
 .PHONY: all
 all:
 	$(MAKE) clang.db
@@ -21,4 +17,4 @@ clang.db: /usr/lib/stdlib.repo
 	cp $< $@
 
 a.out: main.o
-	$(CC) -o $@ -target x86_64-pc-linux-musl-repo main.o
+	$(CC) -o $@ main.o

@@ -5,11 +5,11 @@
 #
 
 CXX = c++
-CXXFLAGS = \
-	-target x86_64-pc-linux-musl-repo \
-	-fno-exceptions                   \
-	-fno-rtti                         \
-	-O0
+
+# The compiler defaults to using the triple "x86_64-pc-linux-musl-repo": there's
+# no need to specify it. We don't yet have support for exceptions or RTTI, so
+# these must be disabled for the moment.
+CXXFLAGS = -fno-exceptions -fno-rtti -O0
 
 .PHONY: all
 all:
@@ -30,4 +30,4 @@ clang.db: /usr/lib/stdlib.repo
 	cp $< $@
 
 hello: hello.o
-	$(CXX) -o $@ -target x86_64-pc-linux-musl-repo $^
+	$(CXX) -o $@ $^
